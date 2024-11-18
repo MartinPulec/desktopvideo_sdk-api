@@ -25,6 +25,10 @@
 ** -LICENSE-END-
 */
 
+/*
+ * -- AUTOMATICALLY GENERATED - DO NOT EDIT ---
+ */
+
 #ifndef BMD_CONST
     #if defined(_MSC_VER)
         #define BMD_CONST __declspec(selectany) static const
