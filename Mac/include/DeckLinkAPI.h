@@ -1,5 +1,5 @@
 /* -LICENSE-START-
- ** Copyright (c) 2024 Blackmagic Design
+ ** Copyright (c) 2025 Blackmagic Design
  **  
  ** Permission is hereby granted, free of charge, to any person or organization 
  ** obtaining a copy of the software and accompanying documentation (the 
@@ -522,6 +522,43 @@ enum _BMDInternalKeyingAncillaryDataSource {
     bmdInternalKeyingUsesAncillaryDataFromKeyFrame               = /* 'ikak' */ 0x696B616B
 };
 
+/* Enum BMDAudioOutputXLRDelayType - Audio output XLR delay types */
+
+typedef uint32_t BMDAudioOutputXLRDelayType;
+enum _BMDAudioOutputXLRDelayType {
+    bmdAudioOutputXLRDelayTypeTime                               = /* 'dtms' */ 0x64746D73,
+    bmdAudioOutputXLRDelayTypeFrames                             = /* 'dtfr' */ 0x64746672
+};
+
+/* Enum BMDLanguage - Languages */
+
+typedef uint32_t BMDLanguage;
+enum _BMDLanguage {
+    bmdLanguageEnglish                                           = /* 'enUS' */ 0x656E5553,
+    bmdLanguageSimplifiedChinese                                 = /* 'zhCN' */ 0x7A68434E,
+    bmdLanguageJapanese                                          = /* 'jaJP' */ 0x6A614A50,
+    bmdLanguageKorean                                            = /* 'koKR' */ 0x6B6F4B52,
+    bmdLanguageSpanish                                           = /* 'esES' */ 0x65734553,
+    bmdLanguageGerman                                            = /* 'deDE' */ 0x64654445,
+    bmdLanguageFrench                                            = /* 'frFR' */ 0x66724652,
+    bmdLanguageRussian                                           = /* 'ruRU' */ 0x72755255,
+    bmdLanguageItalian                                           = /* 'itIT' */ 0x69744954,
+    bmdLanguagePortuguese                                        = /* 'ptBR' */ 0x70744252,
+    bmdLanguageTurkish                                           = /* 'trTR' */ 0x74725452,
+    bmdLanguagePolish                                            = /* 'plPL' */ 0x706C504C,
+    bmdLanguageUkrainian                                         = /* 'ukUA' */ 0x756B5541
+};
+
+/* Enum BMDAudioMeterType - Audio meter type */
+
+typedef uint32_t BMDAudioMeterType;
+enum _BMDAudioMeterType {
+    bmdAudioMeterTypeVUMinus18db                                 = /* 'vu18' */ 0x76753138,
+    bmdAudioMeterTypeVUMinus20db                                 = /* 'vu20' */ 0x76753230,
+    bmdAudioMeterTypePPMMinus18db                                = /* 'pm18' */ 0x706D3138,
+    bmdAudioMeterTypePPMMinus20db                                = /* 'pm20' */ 0x706D3230
+};
+
 /* Enum BMDDeckLinkAttributeID - DeckLink Attribute ID */
 
 typedef uint32_t BMDDeckLinkAttributeID;
@@ -554,6 +591,7 @@ enum _BMDDeckLinkAttributeID {
     BMDDeckLinkSupportsSynchronizeToCaptureGroup                 = /* 'stcg' */ 0x73746367,
     BMDDeckLinkSupportsSynchronizeToPlaybackGroup                = /* 'stpg' */ 0x73747067,
     BMDDeckLinkHasMonitorOut                                     = /* 'fmoo' */ 0x666D6F6F,
+    BMDDeckLinkSupportsExtendedDesktop                           = /* 'dtop' */ 0x64746F70,
 
     /* Integers */
 
@@ -582,6 +620,8 @@ enum _BMDDeckLinkAttributeID {
     BMDDeckLinkMinimumPrerollFrames                              = /* 'mprf' */ 0x6D707266,
     BMDDeckLinkSupportedDynamicRange                             = /* 'sudr' */ 0x73756472,
     BMDDeckLinkMezzanineType                                     = /* 'mezt' */ 0x6D657A74,
+    BMDDeckLinkXLRDelayMsMaximum                                 = /* 'xdtx' */ 0x78647478,
+    BMDDeckLinkXLRDelayFramesMaximum                             = /* 'xdfx' */ 0x78646678,
 
     /* Floats */
 
