@@ -88,9 +88,15 @@ BMD_CONST REFIID IID_IDeckLinkVideoBufferAllocatorProvider        = /* 08B80403-
 BMD_CONST REFIID IID_IDeckLinkAudioOutputCallback                 = /* 403C681B-7F46-4A12-B993-2BB127084EE6 */ { 0x40,0x3C,0x68,0x1B,0x7F,0x46,0x4A,0x12,0xB9,0x93,0x2B,0xB1,0x27,0x08,0x4E,0xE6 };
 BMD_CONST REFIID IID_IDeckLinkIterator                            = /* 50FB36CD-3063-4B73-BDBB-958087F2D8BA */ { 0x50,0xFB,0x36,0xCD,0x30,0x63,0x4B,0x73,0xBD,0xBB,0x95,0x80,0x87,0xF2,0xD8,0xBA };
 BMD_CONST REFIID IID_IDeckLinkAPIInformation                      = /* 7BEA3C68-730D-4322-AF34-8A7152B532A4 */ { 0x7B,0xEA,0x3C,0x68,0x73,0x0D,0x43,0x22,0xAF,0x34,0x8A,0x71,0x52,0xB5,0x32,0xA4 };
+BMD_CONST REFIID IID_IDeckLinkIPFlowAttributes                    = /* CDA938DA-6479-40C6-B2EC-A3579B3AEECD */ { 0xCD,0xA9,0x38,0xDA,0x64,0x79,0x40,0xC6,0xB2,0xEC,0xA3,0x57,0x9B,0x3A,0xEE,0xCD };
+BMD_CONST REFIID IID_IDeckLinkIPFlowStatus                        = /* 31C41656-4992-4396-BBE9-5F8406AAB5AF */ { 0x31,0xC4,0x16,0x56,0x49,0x92,0x43,0x96,0xBB,0xE9,0x5F,0x84,0x06,0xAA,0xB5,0xAF };
+BMD_CONST REFIID IID_IDeckLinkIPFlowSetting                       = /* 86DD9174-27D3-4032-B2AD-6067C3BB2424 */ { 0x86,0xDD,0x91,0x74,0x27,0xD3,0x40,0x32,0xB2,0xAD,0x60,0x67,0xC3,0xBB,0x24,0x24 };
+BMD_CONST REFIID IID_IDeckLinkIPFlow                              = /* C5FC83C7-5B8E-42A7-9A40-7C065955D4E1 */ { 0xC5,0xFC,0x83,0xC7,0x5B,0x8E,0x42,0xA7,0x9A,0x40,0x7C,0x06,0x59,0x55,0xD4,0xE1 };
+BMD_CONST REFIID IID_IDeckLinkIPFlowIterator                      = /* BD296AB2-A5C5-4153-888F-AAB1FDBD8A5C */ { 0xBD,0x29,0x6A,0xB2,0xA5,0xC5,0x41,0x53,0x88,0x8F,0xAA,0xB1,0xFD,0xBD,0x8A,0x5C };
 BMD_CONST REFIID IID_IDeckLinkOutput                              = /* 1A8077F1-9FE2-4533-8147-2294305E253F */ { 0x1A,0x80,0x77,0xF1,0x9F,0xE2,0x45,0x33,0x81,0x47,0x22,0x94,0x30,0x5E,0x25,0x3F };
 BMD_CONST REFIID IID_IDeckLinkMacOutput                           = /* 22EFC84B-6981-4D35-9F9A-9CEC5790107E */ { 0x22,0xEF,0xC8,0x4B,0x69,0x81,0x4D,0x35,0x9F,0x9A,0x9C,0xEC,0x57,0x90,0x10,0x7E };
 BMD_CONST REFIID IID_IDeckLinkInput                               = /* 4095DB82-E294-4B8C-AAA8-3B9E80C49336 */ { 0x40,0x95,0xDB,0x82,0xE2,0x94,0x4B,0x8C,0xAA,0xA8,0x3B,0x9E,0x80,0xC4,0x93,0x36 };
+BMD_CONST REFIID IID_IDeckLinkIPExtensions                        = /* 46CF7903-A9FD-4D0B-8FFC-0103722AB442 */ { 0x46,0xCF,0x79,0x03,0xA9,0xFD,0x4D,0x0B,0x8F,0xFC,0x01,0x03,0x72,0x2A,0xB4,0x42 };
 BMD_CONST REFIID IID_IDeckLinkHDMIInputEDID                       = /* ABBBACBC-45BC-4665-9D92-ACE6E5A97902 */ { 0xAB,0xBB,0xAC,0xBC,0x45,0xBC,0x46,0x65,0x9D,0x92,0xAC,0xE6,0xE5,0xA9,0x79,0x02 };
 BMD_CONST REFIID IID_IDeckLinkEncoderInput                        = /* 46C1332E-6FD9-472A-8591-FE59C22192E1 */ { 0x46,0xC1,0x33,0x2E,0x6F,0xD9,0x47,0x2A,0x85,0x91,0xFE,0x59,0xC2,0x21,0x92,0xE1 };
 BMD_CONST REFIID IID_IDeckLinkVideoBuffer                         = /* CCB4B64A-5C86-4E02-B778-885D352709FE */ { 0xCC,0xB4,0xB6,0x4A,0x5C,0x86,0x4E,0x02,0xB7,0x78,0x88,0x5D,0x35,0x27,0x09,0xFE };
@@ -734,12 +740,58 @@ enum _BMD3DPreviewFormat {
     bmd3DPreviewFormatTopBottom                                  = /* 'topb' */ 0x746F7062
 };
 
+/* Enum BMDIPFlowDirection - BMDIPFlowDirection enumerates the direction of the IP flow. */
+
+enum BMDIPFlowDirection {
+    bmdDeckLinkIPFlowDirectionOutput                             = 0,
+    bmdDeckLinkIPFlowDirectionInput                              = 1
+};
+
+/* Enum BMDIPFlowType - BMDIPFlowDirection enumerates the IP flow type. */
+
+enum BMDIPFlowType {
+    bmdDeckLinkIPFlowTypeVideo                                   = 0,
+    bmdDeckLinkIPFlowTypeAudio                                   = 1,
+    bmdDeckLinkIPFlowTypeAncillary                               = 2
+};
+
+/* Enum BMDDeckLinkIPFlowAttributeID - DeckLink IP Flow Attribute ID */
+
+enum BMDDeckLinkIPFlowAttributeID {
+
+    /* DeckLink IP Flow Attribute Integers */
+
+    bmdDeckLinkIPFlowID                                          = /* '2fai' */ 0x32666169,
+    bmdDeckLinkIPFlowDirection                                   = /* '2fad' */ 0x32666164,
+    bmdDeckLinkIPFlowType                                        = /* '2fat' */ 0x32666174
+};
+
+/* Enum BMDDeckLinkIPFlowStatusID - DeckLink IP Flow Attribute ID */
+
+enum BMDDeckLinkIPFlowStatusID {
+
+    /* DeckLink IP Flow Status Strings */
+
+    bmdDeckLinkIPFlowSDP                                         = /* '2fas' */ 0x32666173
+};
+
+/* Enum BMDDeckLinkIPFlowSettingID - DeckLink IP Flow Setting ID */
+
+enum BMDDeckLinkIPFlowSettingID {
+
+    /* DeckLink IP Flow Setting Strings */
+
+    bmdDeckLinkIPFlowPeerSDP                                     = /* '2fps' */ 0x32667073	// The peer's SDP. Must not be over 1000 bytes large.
+};
+
 /* Enum BMDNotifications - Events that can be subscribed through IDeckLinkNotification */
 
 typedef uint32_t BMDNotifications;
 enum _BMDNotifications {
     bmdPreferencesChanged                                        = /* 'pref' */ 0x70726566,
-    bmdStatusChanged                                             = /* 'stat' */ 0x73746174
+    bmdStatusChanged                                             = /* 'stat' */ 0x73746174,
+    bmdIPFlowStatusChanged                                       = /* 'bfsc' */ 0x62667363,
+    bmdIPFlowSettingChanged                                      = /* 'bfcc' */ 0x62666363
 };
 
 #if defined(__cplusplus)
@@ -754,9 +806,15 @@ class IDeckLinkVideoBufferAllocatorProvider;
 class IDeckLinkAudioOutputCallback;
 class IDeckLinkIterator;
 class IDeckLinkAPIInformation;
+class IDeckLinkIPFlowAttributes;
+class IDeckLinkIPFlowStatus;
+class IDeckLinkIPFlowSetting;
+class IDeckLinkIPFlow;
+class IDeckLinkIPFlowIterator;
 class IDeckLinkOutput;
 class IDeckLinkMacOutput;
 class IDeckLinkInput;
+class IDeckLinkIPExtensions;
 class IDeckLinkHDMIInputEDID;
 class IDeckLinkEncoderInput;
 class IDeckLinkVideoBuffer;
@@ -882,6 +940,75 @@ protected:
     virtual ~IDeckLinkAPIInformation () {} // call Release method to drop reference count
 };
 
+/* Interface IDeckLinkIPFlowAttributes -  */
+
+class BMD_PUBLIC IDeckLinkIPFlowAttributes : public IUnknown
+{
+public:
+    virtual HRESULT GetInt (/* in */ BMDDeckLinkIPFlowAttributeID attrID, /* out */ int64_t* value) = 0;
+    virtual HRESULT GetFlag (/* in */ BMDDeckLinkIPFlowAttributeID attrID, /* out */ bool* value) = 0;
+    virtual HRESULT GetFloat (/* in */ BMDDeckLinkIPFlowAttributeID attrID, /* out */ double* value) = 0;
+    virtual HRESULT GetString (/* in */ BMDDeckLinkIPFlowAttributeID attrID, /* out */ CFStringRef* value) = 0;
+
+protected:
+    virtual ~IDeckLinkIPFlowAttributes () {} // call Release method to drop reference count
+};
+
+/* Interface IDeckLinkIPFlowStatus -  */
+
+class BMD_PUBLIC IDeckLinkIPFlowStatus : public IUnknown
+{
+public:
+    virtual HRESULT GetInt (/* in */ BMDDeckLinkIPFlowStatusID statusID, /* out */ int64_t* value) = 0;
+    virtual HRESULT GetFlag (/* in */ BMDDeckLinkIPFlowStatusID statusID, /* out */ bool* value) = 0;
+    virtual HRESULT GetFloat (/* in */ BMDDeckLinkIPFlowStatusID statusID, /* out */ double* value) = 0;
+    virtual HRESULT GetString (/* in */ BMDDeckLinkIPFlowStatusID statusID, /* out */ CFStringRef* value) = 0;
+
+protected:
+    virtual ~IDeckLinkIPFlowStatus () {} // call Release method to drop reference count
+};
+
+/* Interface IDeckLinkIPFlowSetting -  */
+
+class BMD_PUBLIC IDeckLinkIPFlowSetting : public IUnknown
+{
+public:
+    virtual HRESULT GetInt (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* out */ int64_t* value) = 0;
+    virtual HRESULT GetFlag (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* out */ bool* value) = 0;
+    virtual HRESULT GetFloat (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* out */ double* value) = 0;
+    virtual HRESULT GetString (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* out */ CFStringRef* value) = 0;
+    virtual HRESULT SetInt (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* in */ int64_t value) = 0;
+    virtual HRESULT SetFlag (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* in */ bool value) = 0;
+    virtual HRESULT SetFloat (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* in */ double value) = 0;
+    virtual HRESULT SetString (/* in */ BMDDeckLinkIPFlowSettingID settingID, /* in */ CFStringRef value) = 0;
+
+protected:
+    virtual ~IDeckLinkIPFlowSetting () {} // call Release method to drop reference count
+};
+
+/* Interface IDeckLinkIPFlow -  */
+
+class BMD_PUBLIC IDeckLinkIPFlow : public IUnknown
+{
+public:
+    virtual HRESULT Enable (void) = 0;	// Enables an IP flow to start sending or receiving.
+    virtual HRESULT Disable (void) = 0;	// Disables an IP flow to stop sending or receiving.
+
+protected:
+    virtual ~IDeckLinkIPFlow () {} // call Release method to drop reference count
+};
+
+/* Interface IDeckLinkIPFlowIterator - Enumerates DeckLink IP Flows */
+
+class BMD_PUBLIC IDeckLinkIPFlowIterator : public IUnknown
+{
+public:
+    virtual HRESULT Next (/* out */ IDeckLinkIPFlow** deckLinkIPFlowInstance) = 0;
+
+protected:
+    virtual ~IDeckLinkIPFlowIterator () {} // call Release method to drop reference count
+};
+
 /* Interface IDeckLinkOutput - Created by QueryInterface from IDeckLink. */
 
 class BMD_PUBLIC IDeckLinkOutput : public IUnknown
@@ -982,6 +1109,18 @@ public:
 
 protected:
     virtual ~IDeckLinkInput () {} // call Release method to drop reference count
+};
+
+/* Interface IDeckLinkIPExtensions -  */
+
+class BMD_PUBLIC IDeckLinkIPExtensions : public IUnknown
+{
+public:
+    virtual HRESULT GetDeckLinkIPFlowIterator (/* out */ IDeckLinkIPFlowIterator** iterator) = 0;
+    virtual HRESULT GetIPFlowByID (/* in */ BMDIPFlowID id, /* out */ IDeckLinkIPFlow** flow) = 0;
+
+protected:
+    virtual ~IDeckLinkIPExtensions () {} // call Release method to drop reference count
 };
 
 /* Interface IDeckLinkHDMIInputEDID - Created by QueryInterface from IDeckLink. Releasing all references will restore EDID to default */

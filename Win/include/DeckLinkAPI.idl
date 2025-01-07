@@ -654,11 +654,57 @@ typedef [v1_enum] enum _BMD3DPreviewFormat {
     bmd3DPreviewFormatTopBottom                                  = /* 'topb' */ 0x746F7062
 } BMD3DPreviewFormat;
 
+/* Enum BMDIPFlowDirection - BMDIPFlowDirection enumerates the direction of the IP flow. */
+
+typedef [v1_enum] enum _BMDIPFlowDirection {
+    bmdDeckLinkIPFlowDirectionOutput                             = 0,
+    bmdDeckLinkIPFlowDirectionInput                              = 1
+} BMDIPFlowDirection;
+
+/* Enum BMDIPFlowType - BMDIPFlowDirection enumerates the IP flow type. */
+
+typedef [v1_enum] enum _BMDIPFlowType {
+    bmdDeckLinkIPFlowTypeVideo                                   = 0,
+    bmdDeckLinkIPFlowTypeAudio                                   = 1,
+    bmdDeckLinkIPFlowTypeAncillary                               = 2
+} BMDIPFlowType;
+
+/* Enum BMDDeckLinkIPFlowAttributeID - DeckLink IP Flow Attribute ID */
+
+typedef [v1_enum] enum _BMDDeckLinkIPFlowAttributeID {
+
+    /* DeckLink IP Flow Attribute Integers */
+
+    bmdDeckLinkIPFlowID                                          = /* '2fai' */ 0x32666169,
+    bmdDeckLinkIPFlowDirection                                   = /* '2fad' */ 0x32666164,
+    bmdDeckLinkIPFlowType                                        = /* '2fat' */ 0x32666174
+} BMDDeckLinkIPFlowAttributeID;
+
+/* Enum BMDDeckLinkIPFlowStatusID - DeckLink IP Flow Attribute ID */
+
+typedef [v1_enum] enum _BMDDeckLinkIPFlowStatusID {
+
+    /* DeckLink IP Flow Status Strings */
+
+    bmdDeckLinkIPFlowSDP                                         = /* '2fas' */ 0x32666173
+} BMDDeckLinkIPFlowStatusID;
+
+/* Enum BMDDeckLinkIPFlowSettingID - DeckLink IP Flow Setting ID */
+
+typedef [v1_enum] enum _BMDDeckLinkIPFlowSettingID {
+
+    /* DeckLink IP Flow Setting Strings */
+
+    bmdDeckLinkIPFlowPeerSDP                                     = /* '2fps' */ 0x32667073	// The peer's SDP. Must not be over 1000 bytes large.
+} BMDDeckLinkIPFlowSettingID;
+
 /* Enum BMDNotifications - Events that can be subscribed through IDeckLinkNotification */
 
 typedef [v1_enum] enum _BMDNotifications {
     bmdPreferencesChanged                                        = /* 'pref' */ 0x70726566,
-    bmdStatusChanged                                             = /* 'stat' */ 0x73746174
+    bmdStatusChanged                                             = /* 'stat' */ 0x73746174,
+    bmdIPFlowStatusChanged                                       = /* 'bfsc' */ 0x62667363,
+    bmdIPFlowSettingChanged                                      = /* 'bfcc' */ 0x62666363
 } BMDNotifications;
 
 // Forward Declarations
@@ -671,8 +717,14 @@ interface IDeckLinkVideoBufferAllocatorProvider;
 interface IDeckLinkAudioOutputCallback;
 interface IDeckLinkIterator;
 interface IDeckLinkAPIInformation;
+interface IDeckLinkIPFlowAttributes;
+interface IDeckLinkIPFlowStatus;
+interface IDeckLinkIPFlowSetting;
+interface IDeckLinkIPFlow;
+interface IDeckLinkIPFlowIterator;
 interface IDeckLinkOutput;
 interface IDeckLinkInput;
+interface IDeckLinkIPExtensions;
 interface IDeckLinkHDMIInputEDID;
 interface IDeckLinkEncoderInput;
 interface IDeckLinkVideoBuffer;
@@ -806,6 +858,75 @@ interface IDeckLinkDiscovery;
     HRESULT GetString ([in] BMDDeckLinkAPIInformationID cfgID, [out] BSTR* value);
 };
 
+/* Interface IDeckLinkIPFlowAttributes -  */
+
+[
+    object,
+    uuid(CDA938DA-6479-40C6-B2EC-A3579B3AEECD),
+    helpstring("")
+] interface IDeckLinkIPFlowAttributes : IUnknown
+{
+    HRESULT GetInt ([in] BMDDeckLinkIPFlowAttributeID attrID, [out] LONGLONG* value);
+    HRESULT GetFlag ([in] BMDDeckLinkIPFlowAttributeID attrID, [out] BOOL* value);
+    HRESULT GetFloat ([in] BMDDeckLinkIPFlowAttributeID attrID, [out] double* value);
+    HRESULT GetString ([in] BMDDeckLinkIPFlowAttributeID attrID, [out] BSTR* value);
+};
+
+/* Interface IDeckLinkIPFlowStatus -  */
+
+[
+    object,
+    uuid(31C41656-4992-4396-BBE9-5F8406AAB5AF),
+    helpstring("")
+] interface IDeckLinkIPFlowStatus : IUnknown
+{
+    HRESULT GetInt ([in] BMDDeckLinkIPFlowStatusID statusID, [out] LONGLONG* value);
+    HRESULT GetFlag ([in] BMDDeckLinkIPFlowStatusID statusID, [out] BOOL* value);
+    HRESULT GetFloat ([in] BMDDeckLinkIPFlowStatusID statusID, [out] double* value);
+    HRESULT GetString ([in] BMDDeckLinkIPFlowStatusID statusID, [out] BSTR* value);
+};
+
+/* Interface IDeckLinkIPFlowSetting -  */
+
+[
+    object,
+    uuid(86DD9174-27D3-4032-B2AD-6067C3BB2424),
+    helpstring("")
+] interface IDeckLinkIPFlowSetting : IUnknown
+{
+    HRESULT GetInt ([in] BMDDeckLinkIPFlowSettingID settingID, [out] LONGLONG* value);
+    HRESULT GetFlag ([in] BMDDeckLinkIPFlowSettingID settingID, [out] BOOL* value);
+    HRESULT GetFloat ([in] BMDDeckLinkIPFlowSettingID settingID, [out] double* value);
+    HRESULT GetString ([in] BMDDeckLinkIPFlowSettingID settingID, [out] BSTR* value);
+    HRESULT SetInt ([in] BMDDeckLinkIPFlowSettingID settingID, [in] LONGLONG value);
+    HRESULT SetFlag ([in] BMDDeckLinkIPFlowSettingID settingID, [in] BOOL value);
+    HRESULT SetFloat ([in] BMDDeckLinkIPFlowSettingID settingID, [in] double value);
+    HRESULT SetString ([in] BMDDeckLinkIPFlowSettingID settingID, [in] BSTR value);
+};
+
+/* Interface IDeckLinkIPFlow -  */
+
+[
+    object,
+    uuid(C5FC83C7-5B8E-42A7-9A40-7C065955D4E1),
+    helpstring("")
+] interface IDeckLinkIPFlow : IUnknown
+{
+    HRESULT Enable (void);	// Enables an IP flow to start sending or receiving.
+    HRESULT Disable (void);	// Disables an IP flow to stop sending or receiving.
+};
+
+/* Interface IDeckLinkIPFlowIterator - Enumerates DeckLink IP Flows */
+
+[
+    object,
+    uuid(BD296AB2-A5C5-4153-888F-AAB1FDBD8A5C),
+    helpstring("Enumerates DeckLink IP Flows")
+] interface IDeckLinkIPFlowIterator : IUnknown
+{
+    HRESULT Next ([out] IDeckLinkIPFlow** deckLinkIPFlowInstance);
+};
+
 /* Interface IDeckLinkOutput - Created by QueryInterface from IDeckLink. */
 
 [
@@ -896,6 +1017,18 @@ interface IDeckLinkDiscovery;
     /* Hardware Timing */
 
     HRESULT GetHardwareReferenceClock ([in] BMDTimeScale desiredTimeScale, [out] BMDTimeValue* hardwareTime, [out] BMDTimeValue* timeInFrame, [out] BMDTimeValue* ticksPerFrame);
+};
+
+/* Interface IDeckLinkIPExtensions -  */
+
+[
+    object,
+    uuid(46CF7903-A9FD-4D0B-8FFC-0103722AB442),
+    helpstring("")
+] interface IDeckLinkIPExtensions : IUnknown
+{
+    HRESULT GetDeckLinkIPFlowIterator ([out] IDeckLinkIPFlowIterator** iterator);
+    HRESULT GetIPFlowByID ([in] BMDIPFlowID id, [out] IDeckLinkIPFlow** flow);
 };
 
 /* Interface IDeckLinkHDMIInputEDID - Created by QueryInterface from IDeckLink. Releasing all references will restore EDID to default */
