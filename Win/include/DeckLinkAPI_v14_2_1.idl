@@ -44,6 +44,7 @@
 
 interface IDeckLinkVideoOutputCallback_v14_2_1;
 interface IDeckLinkInputCallback_v14_2_1;
+interface IDeckLinkEncoderInputCallback_v14_2_1;
 interface IDeckLinkMemoryAllocator_v14_2_1;
 interface IDeckLinkOutput_v14_2_1;
 interface IDeckLinkInput_v14_2_1;
