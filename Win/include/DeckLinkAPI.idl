@@ -514,6 +514,9 @@ typedef [v1_enum] enum _BMDDeckLinkAttributeID {
     BMDDeckLinkSupportsSynchronizeToPlaybackGroup                = /* 'stpg' */ 0x73747067,
     BMDDeckLinkHasMonitorOut                                     = /* 'fmoo' */ 0x666D6F6F,
     BMDDeckLinkSupportsExtendedDesktop                           = /* 'dtop' */ 0x64746F70,
+    BMDDeckLinkHANCRequiresInputFilterConfiguration              = /* 'hrif' */ 0x68726966,
+    BMDDeckLinkSupportsHANCOutput                                = /* 'dsho' */ 0x6473686F,
+    BMDDeckLinkSupportsHANCInput                                 = /* 'dshi' */ 0x64736869,
 
     /* Integers */
 
@@ -544,6 +547,8 @@ typedef [v1_enum] enum _BMDDeckLinkAttributeID {
     BMDDeckLinkMezzanineType                                     = /* 'mezt' */ 0x6D657A74,
     BMDDeckLinkXLRDelayMsMaximum                                 = /* 'xdtx' */ 0x78647478,
     BMDDeckLinkXLRDelayFramesMaximum                             = /* 'xdfx' */ 0x78646678,
+    BMDDeckLinkOutputHANCUserDataWordsLimit                      = /* 'mhow' */ 0x6D686F77,
+    BMDDeckLinkInputHANCUserDataWordsLimit                       = /* 'mhiw' */ 0x6D686977,
 
     /* Floats */
 
@@ -693,6 +698,13 @@ typedef [v1_enum] enum _BMD3DPreviewFormat {
     bmd3DPreviewFormatTopBottom                                  = /* 'topb' */ 0x746F7062
 } BMD3DPreviewFormat;
 
+/* Enum BMDAncillaryDataSpace - BMDAncillaryDataSpace enumerates the location of an ancillary packet. */
+
+typedef [v1_enum] enum _BMDAncillaryDataSpace {
+    bmdAncillaryDataSpaceVANC                                    = 0,
+    bmdAncillaryDataSpaceHANC                                    = 1
+} BMDAncillaryDataSpace;
+
 /* Enum BMDIPFlowDirection - BMDIPFlowDirection enumerates the direction of the IP flow. */
 
 typedef [v1_enum] enum _BMDIPFlowDirection {
@@ -700,7 +712,7 @@ typedef [v1_enum] enum _BMDIPFlowDirection {
     bmdDeckLinkIPFlowDirectionInput                              = 1
 } BMDIPFlowDirection;
 
-/* Enum BMDIPFlowType - BMDIPFlowDirection enumerates the IP flow type. */
+/* Enum BMDIPFlowType - BMDIPFlowType enumerates the IP flow type. */
 
 typedef [v1_enum] enum _BMDIPFlowType {
     bmdDeckLinkIPFlowTypeVideo                                   = 0,
@@ -1231,7 +1243,7 @@ interface IDeckLinkDiscovery;
 
 [
     object,
-    uuid(CC5BBF7E-029C-4D3B-9158-6000EF5E3670),
+    uuid(F5C0D498-5CD3-4C77-9773-8EFA20BB334B),
     helpstring("On output, user needs to implement this interface")
 ] interface IDeckLinkAncillaryPacket : IUnknown
 {
@@ -1240,13 +1252,14 @@ interface IDeckLinkDiscovery;
     unsigned char GetSDID (void);
     unsigned int GetLineNumber (void);	// On output, zero is auto
     unsigned char GetDataStreamIndex (void);	// Usually zero. Can only be 1 if non-SD and the first data stream is completely full
+    BMDAncillaryDataSpace GetDataSpace (void);
 };
 
 /* Interface IDeckLinkAncillaryPacketIterator - Enumerates ancillary packets */
 
 [
     object,
-    uuid(3FC8994B-88FB-4C17-968F-9AAB69D964A7),
+    uuid(10F1AA88-54BE-42F7-B9F8-EC2F5F099551),
     helpstring("Enumerates ancillary packets")
 ] interface IDeckLinkAncillaryPacketIterator : IUnknown
 {
@@ -1257,7 +1270,7 @@ interface IDeckLinkDiscovery;
 
 [
     object,
-    uuid(6C186C0F-459E-41D8-AEE2-4812D81AEE68),
+    uuid(8A72D630-8070-4D05-8A93-E60C40EE088A),
     local,
     helpstring("Obtained through QueryInterface on an IDeckLinkVideoFrame object.")
 ] interface IDeckLinkVideoFrameAncillaryPackets : IUnknown
@@ -1643,7 +1656,7 @@ importlib("stdole2.tlb");
 };
 
 [
-    uuid(F891AD29-D0C2-46E9-A926-4E2D0DD8CFAD),
+    uuid(6F47097E-B390-4650-BCB6-C4D52FAA1643),
     helpstring("CDeckLinkVideoFrameAncillaryPackets Class")
 ] coclass CDeckLinkVideoFrameAncillaryPackets
 {
@@ -1659,6 +1672,7 @@ importlib("stdole2.tlb");
 #include "DeckLinkAPIStreaming_v10_8.idl"
 #include "DeckLinkAPI_v10_4.idl"
 #include "DeckLinkAPI_v10_2.idl"
+#include "DeckLinkAPI_v15_2.idl"
 #include "DeckLinkAPI_v11_5.idl"
 #include "DeckLinkAPI_v11_4.idl"
 #include "DeckLinkAPI_v10_8.idl"
