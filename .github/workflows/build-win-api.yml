@@ -20,7 +20,7 @@ jobs:
        pacman -Sy --noconfirm mingw-w64-clang-x86_64-headers-git mingw-w64-clang-x86_64-tools-git zip
        mkdir build
        cd build
-       widl ../Win/include/DeckLinkAPI.idl
+       widl -D'bool=unsigned char' ../Win/include/DeckLinkAPI.idl
        cp ../Win/include/DeckLinkAPIVersion.h .
        zip deck-win-api.zip *
      env:
