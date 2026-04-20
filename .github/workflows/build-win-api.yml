@@ -12,7 +12,7 @@ jobs:
    - uses: actions/checkout@main
 
    - name: Release
-     uses: softprops/action-gh-release@v2
+     uses: softprops/action-gh-release@master
 
    - name: Build
      run: |
@@ -28,7 +28,7 @@ jobs:
      shell: C:\shells\msys2bash.cmd {0}
 
    - name: Release
-     uses: softprops/action-gh-release@v2
+     uses: softprops/action-gh-release@master
      if: startsWith(github.ref, 'refs/tags/')
      with:
        files: build/deck-win-api.zip
