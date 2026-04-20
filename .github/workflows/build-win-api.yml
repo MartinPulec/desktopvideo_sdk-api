@@ -1,4 +1,4 @@
-name: Build and relase Win API
+name: Build and release Win API
 
 on:
  push:
